@@ -29,9 +29,9 @@ public static class GamesEndPoints
             return Results.Ok(games);
         }).WithParameterValidation();
         // Get a game by ID
-        group.MapGet("/{id:int}", (int id) =>
+        group.MapGet("/{id:int}", (int id, GameStoreContext dbContext) =>
         {
-            var game = games.FirstOrDefault(g => g.Id == id);
+            Game? game = dbContext.Games.Find(id);
             if (game is null)
             {
                 return Results.NotFound();
@@ -51,11 +51,6 @@ public static class GamesEndPoints
             dbContext.SaveChanges();
 
             return Results.CreatedAtRoute(GetGameEndPointName, new { id = game.Id }, game.ToDto());
-
-
-
-
-
         }).WithParameterValidation();
         //update a game by ID
         group.MapPut("/{id:int}", (int id, UpdateGameDto updatedGame) =>

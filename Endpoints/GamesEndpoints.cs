@@ -23,7 +23,7 @@ public static class GamesEndPoints
         group.MapGet("/", () =>
         {
             return Results.Ok(games);
-        });
+        }).WithParameterValidation();
         // Get a game by ID
         group.MapGet("/{id:int}", (int id) =>
         {
@@ -41,7 +41,7 @@ public static class GamesEndPoints
             var newGame = new GameDto(newId, game.Name, game.Genre, game.Price, game.ReleaseDate);
             games.Add(newGame);
             return Results.CreatedAtRoute(GetGameEndPointName, new { id = newId }, newGame);
-        });
+        }).WithParameterValidation();
         //update a game by ID
         group.MapPut("/{id:int}", (int id, UpdateGameDto updatedGame) =>
         {
@@ -61,7 +61,7 @@ public static class GamesEndPoints
                 ReleaseDate = updatedGame.ReleaseDate
             };
             return Results.NoContent();
-        });
+        }).WithParameterValidation();
         // delete a game by ID
         group.MapDelete("/{id:int}", (int id) =>
         {
@@ -73,9 +73,9 @@ public static class GamesEndPoints
             games.RemoveAll(g => g.Id == id);
 
             return Results.NoContent();
-        });
+        }).WithParameterValidation();
 
-        return  group;
+        return group;
     }
 
 }

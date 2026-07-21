@@ -9,8 +9,8 @@ POST http://localhost:5100/games
 Content-Type: application/json
 
 {
-  # "name": "New new Game",
-  "genre": "Actioner",
+  "name": "jurasic era",
+  "genreId": 1,
   "price": 59.99,
   "releaseDate": "2024-06-01"
 }
